@@ -31,8 +31,11 @@ function init(){
     const geometry : THREE.BoxGeometry  = new THREE.BoxGeometry(1,1,1);
     const material : THREE.MeshPhongMaterial = new THREE.MeshPhongMaterial({color: 0xffff00});
     const box : THREE.Mesh = new THREE.Mesh(geometry,material);
-
+    const box2 = box.clone();
+    box.position.set(5, 1, 1);
+    box2.position.set(1, 1, 1);
     scene.add(box);
+    scene.add(box2);
 
     //Add light to the scene
     const DirectionalLight = new THREE.DirectionalLight( 0x0F0F0F,10);
