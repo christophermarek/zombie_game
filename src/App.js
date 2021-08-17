@@ -1,7 +1,9 @@
 import React from "react";
-import { Canvas } from "@react-three/fiber";
+import { Canvas, useLoader } from "@react-three/fiber";
 import { OrbitControls, Stars } from "@react-three/drei";
 import { Physics, usePlane, useBox } from "@react-three/cannon";
+import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
+import { MTLLoader } from "three/examples/jsm/loaders/MTLLoader";
 import "./styles.css";
 
 function Box() {
@@ -13,6 +15,7 @@ function Box() {
       }}
       ref={ref}
       position={[0, 2, 0]}
+      scale={(0.3,0.3,0.3)}
     >
       <boxBufferGeometry attach="geometry" />
       <meshLambertMaterial attach="material" color="hotpink" />
@@ -32,6 +35,21 @@ function Plane() {
   );
 }
 
+function LoadZombie(){
+  
+}
+
+function LoadObj() {
+  const materials = useLoader(MTLLoader, './assets/Obj/MountainRocks-0.mtl');
+  const object = useLoader(OBJLoader, './assets/Obj/MountainRocks-0.obj', loader => {
+    materials.preload()
+    loader.setMaterials(materials)
+  })
+  object.position.set(10, 0, 0);
+  object.scale.set(1,1,1);
+  return (<primitive object={object} />);
+}
+
 export default function App() {
   return (
     <Canvas>
@@ -41,6 +59,7 @@ export default function App() {
       <spotLight position={[10, 15, 10]} angle={0.3} />
       <Physics>
         <Box />
+        <LoadObj />
         <Plane />
       </Physics>
     </Canvas>
