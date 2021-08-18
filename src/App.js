@@ -1,10 +1,14 @@
 import React from "react";
-import { Canvas, useLoader } from "@react-three/fiber";
+import { Canvas, useLoader, useState } from "@react-three/fiber";
 import { OrbitControls, Stars } from "@react-three/drei";
 import { Physics, usePlane, useBox } from "@react-three/cannon";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
 import { MTLLoader } from "three/examples/jsm/loaders/MTLLoader";
 import "./styles.css";
+import { PerspectiveCamera } from "three";
+
+import { Player } from './components/Player';
+
 
 function Box() {
   const [ref, api] = useBox(() => ({ mass: 1, position: [0, 2, 0] }));
@@ -15,7 +19,7 @@ function Box() {
       }}
       ref={ref}
       position={[0, 2, 0]}
-      scale={(0.3,0.3,0.3)}
+      scale={(0.3, 0.3, 0.3)}
     >
       <boxBufferGeometry attach="geometry" />
       <meshLambertMaterial attach="material" color="hotpink" />
@@ -35,8 +39,8 @@ function Plane() {
   );
 }
 
-function LoadZombie(){
-  
+function LoadZombie() {
+
 }
 
 function LoadObj() {
@@ -46,22 +50,24 @@ function LoadObj() {
     loader.setMaterials(materials)
   })
   object.position.set(10, 0, 0);
-  object.scale.set(1,1,1);
+  object.scale.set(1, 1, 1);
   return (<primitive object={object} />);
 }
 
 export default function App() {
   return (
-    <Canvas>
+    <Canvas >
       <OrbitControls />
       <Stars />
       <ambientLight intensity={0.5} />
       <spotLight position={[10, 15, 10]} angle={0.3} />
-      <Physics>
-        <Box />
-        <LoadObj />
-        <Plane />
-      </Physics>
+      <PerspectiveCamera>
+        <Physics>
+          <Box />
+          <LoadObj />
+          <Plane />
+        </Physics>
+      </PerspectiveCamera>
     </Canvas>
   );
 }
