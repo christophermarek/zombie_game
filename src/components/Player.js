@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
-import { useSphere } from "@react-three/cannon";
-import { useThree, useFrame } from '@react-three/fiber';
+import { useSphere } from 'use-cannon';
+import { useThree, useFrame } from 'react-three-fiber';
 import { FPVControls } from './FPVControls';
 import { useKeyboardControls } from '../hooks/useKeyboardControls';
 import { Vector3 } from 'three';
@@ -16,11 +16,9 @@ export const Player = (props) => {
     moveRight,
     jump,
   } = useKeyboardControls();
-
   const [ref, api] = useSphere(() => ({
     mass: 1,
     type: 'Dynamic',
-    scale: (1,1,1),
     ...props,
   }));
 
@@ -55,7 +53,6 @@ export const Player = (props) => {
     if (jump && Math.abs(velocity.current[1].toFixed(2)) < 0.05) {
       api.velocity.set(velocity.current[0], 8, velocity.current[2]);
     }
-
   });
   return (
     <>

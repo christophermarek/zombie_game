@@ -1,8 +1,8 @@
 import React from 'react';
-import { useSphere, useBox, usePlane } from '@react-three/cannon';
+import { usePlane } from 'use-cannon';
 import { TextureLoader, RepeatWrapping, NearestFilter, LinearMipMapLinearFilter } from 'three';
 
-import grass from '../grass.jpg';
+import grass from '../images/grass.jpg';
 import { useStore } from '../hooks/useStore';
 
 export const Ground = (props) => {
