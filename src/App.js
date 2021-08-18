@@ -1,25 +1,21 @@
 import React from "react";
-import { Canvas, useLoader, useState } from "@react-three/fiber";
-import { OrbitControls, Stars } from "@react-three/drei";
+import { Canvas, useLoader } from "@react-three/fiber";
+import { OrbitControls, Stars, Sky } from "@react-three/drei";
 import { Physics, usePlane, useBox } from "@react-three/cannon";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
 import { MTLLoader } from "three/examples/jsm/loaders/MTLLoader";
 import "./styles.css";
 import { PerspectiveCamera } from "three";
-
 import { Player } from './components/Player';
-
+import { Ground } from './components/Ground';
 
 function Box() {
-  const [ref, api] = useBox(() => ({ mass: 1, position: [0, 2, 0] }));
+  const [ref, api] = useBox(() => ({ mass: 1, position: [1, 2, 1] }));
   return (
     <mesh
-      onClick={() => {
-        api.velocity.set(0, 2, 0);
-      }}
       ref={ref}
-      position={[0, 2, 0]}
-      scale={(0.3, 0.3, 0.3)}
+      position={[10, 1, 1]}
+      scale={(1, 1, 1)}
     >
       <boxBufferGeometry attach="geometry" />
       <meshLambertMaterial attach="material" color="hotpink" />
@@ -55,19 +51,17 @@ function LoadObj() {
 }
 
 export default function App() {
+
   return (
     <Canvas >
-      <OrbitControls />
       <Stars />
-      <ambientLight intensity={0.5} />
-      <spotLight position={[10, 15, 10]} angle={0.3} />
-      <PerspectiveCamera>
-        <Physics>
-          <Box />
-          <LoadObj />
-          <Plane />
-        </Physics>
-      </PerspectiveCamera>
+      <Sky sunPosition={[100, 20, 100]} />
+      <ambientLight intensity={0.25} />
+      <pointLight castShadow intensity={0.7} position={[100, 100, 100]} />
+      <Physics gravity={[0, -30, 0]}>
+        <Ground position={[0, 0.5, 0]} />
+        <Player position={[0, 3, 10]} />
+      </Physics>
     </Canvas>
   );
 }

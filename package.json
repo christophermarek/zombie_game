@@ -9,7 +9,8 @@
     "react-dom": "17.0.1",
     "react-scripts": "^4.0.3",
     "react-three-fiber": "5.3.1",
-    "three": "^0.131.3"
+    "three": "^0.131.3",
+    "use-cannon": "^0.5.3"
   },
   "scripts": {
     "start": "react-scripts start",
